@@ -7,7 +7,15 @@ class PhotosController < ApplicationController
   end
 
   def show
-    render({:template => "photo_templates/show"})
+    url_id = params.fetch("path_id")
+    @the_photo = Photo.where({ :id => url_id}).at(0)
+
+    if @the_photo == nil
+      redirect_to("/404")
+    else
+      render({:template => "photo_templates/show"})
+    end
+    
 
   end
 
