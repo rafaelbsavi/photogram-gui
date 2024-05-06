@@ -20,15 +20,14 @@ class UsersController < ApplicationController
   def update
     #Parameters: {"input_username"=>"rafael", "past_username"=>"anisa"}
 
-    old_username = params.fetch("past_username")
-    new_username = params.fetch("input_username")
+    the_username = params.fetch("past_username")
+    @new_username = User.where(:username => the_username).at(0)
 
-    new_user = User.where({ :username => old_username}).first
-    new_user.username = new_username
-    
-    new_user.save
+    @new_username.username = params.fetch("input_username")
 
-    redirect_to("/users")
+    @new_username.save
+
+    redirect_to("/users/#{@new_username.username}")
 
   end
 
